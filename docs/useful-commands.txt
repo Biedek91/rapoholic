@@ -1,0 +1,6 @@
+Gradle:
+gradle init --type java-library (Inicjalizacja struktury projektu gradle dla Javy)
+gradle clean build (Budowanie aplikacji)
+
+Git:
+
