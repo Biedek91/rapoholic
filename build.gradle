@@ -1,24 +1,36 @@
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.liquibase.gradle'
-
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.liquibase:liquibase-gradle-plugin:$liquibaseGradlePlugin") {
-            exclude(module: 'liquibase-core')   // exclude the dependency on liquibase-core:3.3.5
-        }
-        classpath("org.liquibase:liquibase-core:$liquibaseCoreVersion")
-    }
+	ext {
+		springBootVersion = '2.0.0.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'pl.rapoholic'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
 repositories {
-    mavenCentral()
+	mavenCentral()
+}
+
+bootJar {
+	archiveName = 'rapoholic.jar'
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootStarterVersion"
-    compile "org.hibernate:hibernate-core:$hibernateCoreVersion"
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	runtime('com.h2database:h2')
+	runtime('org.postgresql:postgresql')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
